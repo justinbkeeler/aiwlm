@@ -3,7 +3,7 @@ import openai
 import textwrap
 
 # Set your OpenAI API key
-api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def buddy_beam_welcome():
     """
