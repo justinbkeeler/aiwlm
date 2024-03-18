@@ -4,14 +4,8 @@
 The  AI Powered Work-Life Mentor for Research Purposes is a Streamlit-based application to assist in various academic tasks, including paper writing, email composition, programming, and more. It leverages OpenAI's GPT models to generate responses based on user inputs. It is basically just an easy way to craft prompts for often repeated tasks. 
 
 ## Features
-- **Reviewer Response Generator**: Helps in crafting responses to reviewer comments for journal publications.
-- **Paper Writing Assistant**: Assists in developing content for academic papers.
-- **Email Composition**: Aids in writing concise and polite emails.
-- **Programming Support**: Provides assistance in various programming languages.
-- **Chat Interface**: A chatbot for general queries and assistance.
-- **Custom Prompt Generator**: Allows users to create custom prompts for specific needs.
+- **Chat Interface**: A chatbot for general queries and assistance concerning work-life situations.
 
-Remember to change the various system prompts to suit your needs. 
 
 ## Installation
 1. Clone the repository:
@@ -40,9 +34,9 @@ This project is licensed under the AGPL-3.0 license.
 ## Citation
 If you use this application in your research or work, please cite it as follows:
 
-- **APA**: Nasir, M. (2024). *GPTRA*. GitHub. Retrieved January 28, 2024, from https://github.com/murtaza-nasir/gptra.git
-- **MLA**: Nasir, Murtaza. *GPTRA*. 2024, https://github.com/murtaza-nasir/gptra.git.
-- **Chicago**: Nasir, Murtaza. 2024. *GPTRA*. Accessed January 28, 2024. https://github.com/murtaza-nasir/gptra.git.
+- **APA**: Keeler, J.B. (2024). *AIWLM*. GitHub. Retrieved March 14, 2024, from https://github.com/justinbkeeler/aiwlm.git
+- **MLA**: Keeler, Justin B. *AIWLM*. 2024, https://github.com/justinbkeeler/aiwlm.git.
+- **Chicago**: Keeler, Justin B. 2024. *AIWLM*. Accessed March 14, 2024. https://github.com/justinbkeeler/aiwlm.git.
 
 
 For any further inquiries or contributions, please visit [Dr. Justin Keeler's website](https://justinbkeeler.com).
