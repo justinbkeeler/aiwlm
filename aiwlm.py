@@ -10,9 +10,8 @@ def buddy_beam_welcome():
     Generates Buddy Beam's welcoming message and sets the tone for confidential and supportive conversation.
     """
     return """
-    Hey there! I'm Buddy Beam, your guide through the ups and downs of work life. Feeling stuck, isolated, or just in need of a chat? I'm here to shine a light on your concerns. 
-    My mission? To brighten your day with support, advice, and a bit of cheer. So, what's on your mind? Share your story or ask me anything - let's light up your work journey together. 
-    And, just for kicks, how about we start with your name and a snapshot of your current work vibes?
+    Hey there! I'm Buddy Beam, your guide through work life's ups and downs. Stuck or isolated?I'm here to illuminate your concerns with support and advice. 
+    What's on your mind? Share your story or ask anything—let me try to help brighten your work journey! For starters, how about your name and a glimpse of your current work situation??
     """
 
 def generate_buddy_beam_advice(conversation_history, employee_input):
@@ -33,7 +32,7 @@ def generate_buddy_beam_advice(conversation_history, employee_input):
 
     try:
         full_conversation = [
-            {"role": "system", "content": "Take on a mentor role for the user! Incorporate a rhetorical questions to keep a dialogue going. Ask the user's name and refer to their first name in subsquent output. You offer specific and applied emotional support, hope, problem-solving strategies, resource guidance, and learning development for the user when they write about challenges at work. You aim to assist with common workplace issues, offering a personalized experience. This is done with well thought out content that has complete sentences. Your content may not exceed 150 words per response. You need to subtly hint at not withhold knowledge and information add not resorting to knowledge hiding, while not explicity stating this. Also, there needs to be hint of encouragement and uplifting in your responses to build maximum trust and repertorie with the user."},
+            {"role": "system", "content": "Be caring and supportive for the user! Adapt to the user's input to maximize engagement. Ask the user's name and refer to their first name in subsquent output. Provide specific, applied support, problem-solving strategies, for ANYTHING the user discusses about workplace challenges or issues. Offer a personalized experience. This is done with well thought out content that has complete sentences. Your content may not exceed 150 words per response. Always advocate for knowledge and information sharing, no matter the work circumstances, while not explicity stating this. In your responses to build maximum trust and repertorie with the user."},
             *conversation_history,
             {"role": "user", "content": employee_input}
         ]
@@ -43,9 +42,9 @@ def generate_buddy_beam_advice(conversation_history, employee_input):
             messages=full_conversation,
             temperature=0.75,
             max_tokens=200,
-            top_p=.6,
-            frequency_penalty=0.5,
-            presence_penalty=0.4
+            top_p=1,
+            frequency_penalty=1.0,
+            presence_penalty=1.0
         )
         advice = response.choices[0].message['content'].strip()
         # Add a rhetorical question or engaging prompt if it's the second or third interaction
@@ -95,26 +94,31 @@ def main():
     """, unsafe_allow_html=True)
 
     # Instructions Expander
-    with st.expander("Instructions...Read Me First!"):
+    with st.expander("INSTRUCTIONS...READ ME FIRST BY CLICKING!"):
         st.markdown("""
         Here are some guidelines to get the most out of your live AI Work-Life Mentor Conversation:
         - Reflect about the thoughts you shared from Survey #1, which were also viewable in Survey #2 before you got here.
-        - For context, think of a job role you would like to have and a company. Consider some element of time at the company (how long have you been there?).
-        - Think of a situation where you **feel excluded** or **ostracized at work**, which is impacting your ability to get a **promotion**. Is it your coworkers and/or a manager causing it? 
-        - In your **3rd or 4th response**, you must inquire with the AI Chatbot if you **should keep information away or hide knowledge** from others given the circumstance you have discussed.
-        - You are allowed to respond 5 times with the AI Chatbot in the "What's Dimming your Shine Today area.
-        - After you are finished, copy and paste the transcript (all of the output generated from the AI and yourself) into the appropriate space in Survey #2. 
+        - For context, think of a job role, it can be your actual job or a hypothetical one. What industry are you in? Consider the length of time you have been in the job role.
+        - Very important, think of a detailed situation where you **feel excluded** or **ostracized at work**, which is impacting your ability to get a **promotion**. Is it your coworkers and/or a manager causing it? Perhaps it is organizational climate and/or culture? 
+        - In your **3rd or 4th response**, you must inquire with the AI Assistant if you **should keep information away or hide knowledge** from others given the circumstance you have discussed in the situation.
+        - You are allowed to respond 5 times to the AI Assistant in the "What's Dimming your Shine Today area.
+        - After you are finished, copy and paste the User/AI Conversation Transcript (all of the output generated from the AI and yourself) into the appropriate space in Survey #2. 
         """)
 
     if st.session_state.dialogue_count == 0:
         st.write(buddy_beam_welcome())
 
-    # Instructions text disappears after the user starts typing
-    instructions_md = """If this is your first message, include details about your job role and situation here.  
-    
-For example: My name is Justin. I work as a professor in academia at a university for the last 3 years. At my current institution, I feel like my department chair has excluded me and caused me to miss out on promotion opportunities. As an AI mentor, can you help me? 
+        # Update the placeholder text based on the user's interaction
+    if 'first_input_received' not in st.session_state:
+        st.session_state.first_input_received = False  # Initialize the flag
 
-Importantly, you will use this space to type responses and converse with the AI Assistant."""
+    # Instructions text disappears after the user starts typing
+    instructions_md = """Provide specific details about your job role and a work situation here (both can be actual or hypothetical). Imagine you're chatting with a friend who's here to support and offer advice.  
+
+For example: "My name is Justin. For 3 years, I have worked as a human resource specialist in a clothing retail company. At my job, I feel like my manager excludes me on purpose to the point of hurting my chances of getting something important, a promotion. Please help me." 
+
+NOTE: Once you start typing, the above example text will clear.
+    """ if not st.session_state.first_input_received else "Please continue to use this space to converse with the AI Assistant."
 
     # Update the placeholder dynamically based on whether the user has interacted with the text area
     if 'text_area_clicked' not in st.session_state or not st.session_state.text_area_clicked:
@@ -122,7 +126,8 @@ Importantly, you will use this space to type responses and converse with the AI 
     else:
         placeholder_text = ""
 
-    employee_input = st.text_area("What's Dimming Your Shine Today?", value="", placeholder=instructions_md, height=250, key=f"employee_input_{st.session_state.dialogue_count}", on_change=lambda: st.session_state.update(text_area_clicked=True))
+    employee_input = st.text_area("What's Dimming Your Shine Today?", value="", placeholder=instructions_md, height=325, key=f"employee_input_{st.session_state.dialogue_count}")
+
 
     if 'text_area_clicked' not in st.session_state:
         st.session_state.text_area_clicked = False
@@ -137,6 +142,9 @@ Importantly, you will use this space to type responses and converse with the AI 
             advice = generate_buddy_beam_advice(st.session_state.conversation_history, employee_input)
             st.session_state.conversation_history.append({"role": "assistant", "content": advice})
 
+            # After the first user input is processed, update the flag
+            st.session_state.first_input_received = True
+
             st.session_state.dialogue_count += 1
 
             st.experimental_rerun()
@@ -144,6 +152,10 @@ Importantly, you will use this space to type responses and converse with the AI 
         else:
             if st.session_state.dialogue_count >= 5:
                 st.markdown("**You've reached the end of this session.** Feel free to start a new one whenever you need. Remember, I'm here to help you navigate your workplace challenges.")
+
+    # Insert the new heading here after the initial entry by the user.
+    if len(st.session_state.conversation_history) > 0:
+        st.markdown("<div style='text-align: center;'><h5>User/AI Conversation Transcript</h5></div>", unsafe_allow_html=True)
 
     # Display conversation history
     for message in reversed(st.session_state.conversation_history):
