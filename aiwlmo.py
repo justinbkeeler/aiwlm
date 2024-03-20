@@ -11,7 +11,7 @@ def buddy_beam_welcome():
     """
     return """
     Hi, I'm Common Chatter, your place to discuss work life's ups and downs. Stuck or isolated? I'm here to listen to your concerns, provide support and advice, when feasible. 
-    What's on your mind? Share your story or ask anything—let me listen and try to understand your work journey! For starters, how about your name and a glimpse of your current work situation??
+    What's on your mind? Share your story or ask anything—let me listen and try to understand your work journey.
     """
 
 def generate_buddy_beam_advice(conversation_history, employee_input):
@@ -123,7 +123,7 @@ NOTE: Once you start typing, the above example text will clear.
     else:
         placeholder_text = ""
 
-    employee_input = st.text_area("What's your current work topic?", value="", placeholder=instructions_md, height=325, key=f"employee_input_{st.session_state.dialogue_count}")
+    employee_input = st.text_area("Discuss your current work issue here", value="", placeholder=instructions_md, height=325, key=f"employee_input_{st.session_state.dialogue_count}")
 
 
     if 'text_area_clicked' not in st.session_state:
